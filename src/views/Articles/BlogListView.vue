@@ -25,8 +25,9 @@ function load() {
 }
 
 onMounted(() => {
+  let per_page = 25;
   load()
-  categoryStore.fetchAll()
+  categoryStore.fetchAll({ _per_page: per_page })
 })
 
 // any filter change must reset to page 1, THEN load
