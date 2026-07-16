@@ -5,6 +5,7 @@ export const useCategoryStore = defineStore('category', {
   state: () => ({
     categories: [],
     isLoading: false,
+    pagination: {},
     error: null
   }),
   getters: {
@@ -15,12 +16,13 @@ export const useCategoryStore = defineStore('category', {
   },
 
   actions: {
-    async fetchAll() {
+    async fetchAll(params) {
       this.isLoading = true
       this.error = null
       try {
-        const { data } = await categoryApi.getAll()
-        this.categories = data?.data || data || []
+        const { data } = await categoryApi.getAll(params)
+        this.categories = data?.data || data || [];
+        this.pagination = data?.pagination;
       } catch (err) {
         this.error = err.message
         this.categories = []

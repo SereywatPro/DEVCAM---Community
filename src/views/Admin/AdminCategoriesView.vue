@@ -1,11 +1,12 @@
 <script setup>
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 import AdminTabs from '@/components/admin/AdminTabs.vue'
 import LoadingSpinner from '@/components/common/LoadingSpinner.vue'
 import ConfirmDeleteModal from '@/components/common/ConfirmDeleteModal.vue'
 import { useCategoryStore } from '@/stores/category'
 import { useToastStore } from '@/stores/toast'
 import { sanitizeText } from '@/composables/useValidators'
+import AppPagination from '../../components/common/AppPagination.vue'
 
 const categoryStore = useCategoryStore()
 const toast = useToastStore()
@@ -16,8 +17,22 @@ const editingId = ref(null)
 const editingName = ref('')
 const savingEdit = ref(false)
 const pendingDelete = ref(null)
+const perPage = ref(10)
+const page = ref(1)
 
-onMounted(() => categoryStore.fetchAll())
+function load() {
+  categoryStore.fetchAll({
+    _page: page.value,
+    _per_page: perPage.value
+  });
+}
+
+onMounted(() => {
+  load();
+})
+
+// watch(search, () => { page.value = 1; load() })
+watch(page, load)
 
 async function handleCreate() {
   const name = sanitizeText(newName.value)
@@ -69,6 +84,7 @@ async function confirmDelete() {
   const res = await categoryStore.remove(cat.id)
   toast[res.success ? 'success' : 'error'](res.success ? 'Category deleted' : res.message)
 }
+const totalPages = () => categoryStore.pagination?.total_pages || 1;
 </script>
 
 <template>
@@ -124,6 +140,7 @@ async function confirmDelete() {
           </tr>
         </tbody>
       </table>
+       <AppPagination v-model:current-page="page" :total-pages="totalPages()" />
     </section>
 
     <ConfirmDeleteModal
