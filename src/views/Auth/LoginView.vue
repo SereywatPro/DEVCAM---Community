@@ -66,8 +66,8 @@ async function handleSubmit() {
             />
             <button
               type="button"
-              class="btn-toggle-password"
-              style="position: absolute; right: 0.75rem; top: 50%; transform: translateY(-50%); background: none; border: none; padding: 0.25rem;"
+              class="btn-toggle-password text-uppercase"
+              style="position: absolute; right: 0.75rem; top: 50%; transform: translateY(-50%); background: none; border: none; padding: 0.25rem; font-size: 0.85rem; cursor: pointer;"
               :aria-label="showPassword ? 'Hide password' : 'Show password'"
               @click="showPassword = !showPassword"
             >

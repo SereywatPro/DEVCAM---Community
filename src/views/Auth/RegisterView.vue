@@ -67,19 +67,52 @@ async function handleSubmit() {
           <input id="email" v-model="form.email" type="email" class="form-control-ink" autocomplete="email" />
           <p v-if="errors.email" class="text-danger small mt-1">{{ errors.email }}</p>
         </div>
-        <div class="position-relative">
+        
+        <!-- Password Field -->
+        <div>
           <label class="eyebrow d-block mb-1" for="password">Password</label>
-          <input id="password" v-model="form.password" :type="showPassword ? 'text' : 'password'" class="form-control-ink" autocomplete="new-password" />
+          <div class="position-relative">
+            <input 
+              id="password" 
+              v-model="form.password" 
+              :type="showPassword ? 'text' : 'password'" 
+              class="form-control-ink pe-5" 
+              autocomplete="new-password" 
+            />
+            <button 
+              @click="showPassword = !showPassword" 
+              type="button" 
+              class="position-absolute toggle-btn"
+            >
+              {{ showPassword ? 'Hide' : 'Show' }}
+            </button>
+          </div>
           <p class="eyebrow mt-1" style="font-size: 0.65rem;">8+ chars, upper &amp; lowercase, number, special character</p>
           <p v-if="errors.password" class="text-danger small mt-1">{{ errors.password }}</p>
-          <button @click="showPassword = !showPassword" type="button" class="position-absolute toggle" >
-            {{ showPassword ? 'Hide' : 'Show' }}</button>
         </div>
-        <div class="position-relative">
+
+        <!-- Confirm Password Field -->
+        <div>
           <label class="eyebrow d-block mb-1" for="confirm">Confirm password</label>
-          <input id="confirm" v-model="form.confirmPassword" :type="showPassword ? 'text' : 'password'" class="form-control-ink" autocomplete="new-password" />
+          <div class="position-relative">
+            <input 
+              id="confirm" 
+              v-model="form.confirmPassword" 
+              :type="showPassword ? 'text' : 'password'" 
+              class="form-control-ink pe-5" 
+              autocomplete="new-password" 
+            />
+            <button 
+              @click="showPassword = !showPassword" 
+              type="button" 
+              class="position-absolute toggle-btn"
+            >
+              {{ showPassword ? 'Hide' : 'Show' }}
+            </button>
+          </div>
           <p v-if="errors.confirmPassword" class="text-danger small mt-1">{{ errors.confirmPassword }}</p>
         </div>
+
         <button class="btn-ink mt-2" type="submit" :disabled="submitting">
           {{ submitting ? 'Creating account…' : 'Create account' }}
         </button>
@@ -94,22 +127,31 @@ async function handleSubmit() {
 </template>
 
 <style scoped>
-.toggle{
-  top: 49%;
-  right: 0.75rem; 
-  transform: translateY(-100%);
+
+
+
+/* Fix for the toggle button */
+.toggle-btn {
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
   border: none;
-  font-size:1rem;
-  color: var(--ink-500);
-  background-color: transparent;
+  padding: 0;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  color: #000;
+  z-index: 10;
+  line-height: 1;
 }
-.toggle-2{
-  top: 60%;
-  right: 0.75rem; 
-  transform: translateY(-40%);
-  border: none;
-  font-size:1rem;
-  color: var(--ink-500);
-  background-color: transparent;
+
+.text-danger {
+  color: #dc3545;
+}
+
+.pe-5 {
+  padding-right: 3.5rem !important;
 }
 </style>
