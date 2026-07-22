@@ -107,10 +107,6 @@ A few details worth knowing if you're extending this app:
 - A thumbnail can only be uploaded to an article that already exists, so creating a new article with an image is a two-step flow: create the article, then upload the thumbnail against the returned article id.
 - Some backend endpoints report failures with an HTTP 200 status and `{ result: false, message }` in the body instead of a 4xx/5xx status. The shared Axios instance in `src/api/axios.js` treats `result === false` as a failed request either way, so this is handled once, centrally, rather than in every view.
 
-## Contributing
-
-Issues and pull requests are welcome. Please keep new components consistent with the existing design tokens in `src/assets/main.css` rather than introducing new one-off styles.
-
 ---
 
 **Author:** SEREYWAT
